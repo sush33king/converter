@@ -72,9 +72,15 @@ if (!isset($_POST['submit']))
 }
 else
 {
-    
+        
     $receiver_code = $_POST['recv_code'];
     $callsign_code = $_POST['callsign_code'];
+
+    if(is_null($_POST['recv_code']))
+    {
+        echo "File format error";
+        exit();
+    }
     
  
     $file_mimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
