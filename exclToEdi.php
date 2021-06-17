@@ -76,11 +76,7 @@ else
     $receiver_code = $_POST['recv_code'];
     $callsign_code = $_POST['callsign_code'];
 
-    if(is_null($_POST['recv_code']))
-    {
-        echo "File format error";
-        exit();
-    }
+    
     
  
     $file_mimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -91,15 +87,19 @@ else
         $arr_file = explode('.', $_FILES['file']['name']);
         $extension = end($arr_file);
      
-        if('csv' == $extension) {
-            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-        } else {
+        if('xlsx' == $extension) {
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        }
+        else
+        {
+            echo("Data or File format error");
+            exit();
         }
  
         $spreadsheet = $reader->load($_FILES['file']['tmp_name']);        
         $sheetCount = $spreadsheet->getSheetCount();
 
+        
         for ($j = 0; $j < $sheetCount; $j++) 
         {
             $sheet = $spreadsheet->getSheet($j);
